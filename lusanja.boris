@@ -1,0 +1,46 @@
+# format file for Lusanja, for use with boris.pl
+
+TOP = W1:1 W2:5 W3:3;
+W1 = SYLL;
+W2 = SYLL+SYLL ;
+W3 = SYLL+SYLL+SYLL  ;
+SYLL = C+V+Cfinal;
+V = a e i o u ;
+C =      m n ng p t k c sh s f jh zh z v r l j w ;
+Cfinal = m n ng p t k c sh s f jh zh z v r l j w F0:24;
+F0 = ;
+
+rr > r;
+ll > l;
+jj > j;
+ww > w;
+wj([^h]) > w$1;
+jw > j;
+wr > w;
+jr > j;
+mm > m;
+nn > n;
+ngng > ng;
+cc > c;
+shsh > sh;
+ss > s;
+ff > f;
+jhjh > jh;
+zhzh > zh;
+zz > z;
+vv > v;
+kk > k;
+pp > p;
+tt > t;
+jng* > j;
+jm > j;
+wng* > j;
+wm > j;
+# don't do this with "jh" but with any other letter following ij
+ij([abcdefgijklmnopqrstuvxyz]+) > i$1;
+wu > u;
+uw > u;
+
+k$ > ;
+t$ > ;
+p$ > ;
