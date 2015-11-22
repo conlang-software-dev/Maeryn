@@ -1,0 +1,4 @@
+1     a e i o u ;	# vowels
+0.5   m n ng ;  #nasals
+0.1   p t k c ;	# plosives
+0.25  sh s f jh zh z v r l j w ;	#etc.
