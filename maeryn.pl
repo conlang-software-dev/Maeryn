@@ -70,7 +70,7 @@ my @sorted_tokens = ();
 sub usage {
     print STDERR <<HELP;
 
-Usage: $0   [-f <filename>] [-w <filename>] [-o <filename>] [-d]
+Usage: $0   [-f <filename>] [-w <filename>] [-d <filename>] [-o <filename>] [-D] [-s]
 
 -f
 --format	format file with weights for each token
@@ -107,8 +107,18 @@ sub read_format {
     foreach ( @rules ) {
 	s/^ //;
 	s/ $//;
+	next if m/^$/;
+	if ( m/\$[A-Za-z0-9_] *=/ ) {
+	    warn "unsupported rule type, ignoring it\n$_\n";
+	    next;
+	}
 	my @tokens = split " ";
 	my $weight = $tokens[0];
+	if ( $weight !~ m/[0-9.]+/ ) {
+	    warn "unsupported rule type, ignoring it\n$_\n";
+	    next;
+	}
+
 	shift @tokens;
 	foreach ( @tokens ) {
 	    $token_weights{ $_ } = $weight;
@@ -117,6 +127,10 @@ sub read_format {
 
     if ( $debug ) {
 	print STDERR map { "$_ : $token_weights{ $_ } \n" } keys %token_weights;
+    }
+
+    if ( 0 == scalar keys %token_weights ) {
+	die "no valid rules found\n";
     }
 
     @sorted_tokens = sort {length $b <=> length $a} keys %token_weights;
@@ -142,7 +156,7 @@ WHILE:    while ( length $word ) {
 	    }
 	}
 	if ( length $word == $lastlen ) {
-	    die;
+	    die "no token recognized at position: $word\n"
 	} else {
 	    $lastlen = length $word;
 	}
@@ -181,6 +195,12 @@ my $rc = GetOptions(
 if ( not $rc or $help ) {
     &usage;
     exit(0);
+}
+
+if ( "" eq $definitions_file ) {
+    print STDERR "-d / --definitions option is required\n";
+    &usage;
+    exit(1);
 }
 
 if ( $output_file ) {
@@ -225,12 +245,6 @@ print STDERR "after reading/sorting words\n" if $debug;
 
 #print join "\n", @words;
 
-if ( "" eq $definitions_file ) {
-    print STDERR "-d --definitions option is required\n";
-    &usage;
-    exit(1);
-}
-
 open DEFS, $definitions_file	or die "can't open $definitions_file for reading\n";
 my @defs = <DEFS>;
 close DEFS;
@@ -270,4 +284,3 @@ for ( my $i = 0; $i < scalar @words ; $i++ ) {
 
     ##TODO if rand < $polysemy_rate then match another def with this word
 }
-  
