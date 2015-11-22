@@ -1,0 +1,57 @@
+1	to, toward
+1	and
+1	or
+2	but
+1	I, me
+1	you, y'all
+2	we (inclusive)
+2	we (exclusive)
+2	he, she, it
+2	they
+3	he, she, it (obviative)
+3	they (obviative)
+10	man
+10	woman
+10	child
+20	person
+5	this
+6	that
+6	that over yonder
+50	thing, stuff
+20	good
+20	bad
+30	live
+100	horse
+200	cat
+100	dog
+100	sheep
+100	goat
+200	head of cattle
+200	llama
+200	pig
+150	song, piece of music
+150	story
+20	now, here
+25	there, at another time
+5	not, no, un-
+170	plough
+170	wheel
+170	canoe
+1000	computer, TV, cellphone
+900	old-fashioned telephone
+800	printing press, typewriter
+700	tiger
+700	elephant
+800	telescope
+20	zero
+10	one
+10	two
+20	three
+20	four
+20	five
+30	six
+30	seven
+30	eight
+30	nine
+30	ten
+  
